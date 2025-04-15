@@ -20,7 +20,7 @@ function Likeds() {
             <span className="block md:w-150 w-full h-[2px] bg-linear-to-r from-(--primary) to-(--secondary)" />
             <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-8 gap-6">
                 {list.map((e, k) => (
-                    <div key={k} className="bg-white w-full shadow-md flex flex-col gap-4 cursor-pointer hover:text-[var(--secondary)] group overflow-hidden rounded-md hover:shadow-lg transition duration-300">
+                    <Link to='/haber' key={k} className="bg-white w-full shadow-md flex flex-col gap-4 cursor-pointer hover:text-[var(--secondary)] group overflow-hidden rounded-md hover:shadow-lg transition duration-300">
                         <img
                             src={e.image}
                             alt="new_image"
@@ -29,7 +29,7 @@ function Likeds() {
                         <div className="px-4 pb-4">
                             <b className="clamp-p transition duration-300">{e.name}</b>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>

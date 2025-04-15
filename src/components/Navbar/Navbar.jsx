@@ -13,7 +13,7 @@ function Navbar() {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 60) {
+            if (window.scrollY > 100) {
                 setScrolled(true);
             } else {
                 setScrolled(false);
@@ -84,16 +84,16 @@ function Navbar() {
     return (
         <>
             <div className="w-full h-full bg-black opacity-80 fixed top-0 left-0 z-9998 transition duration-1000" style={{ transform: menu ? "translateX(0)" : "translateX(100%)" }} />
-            <div className="flex justify-center items-center bg-white shadow-xl w-full py-4 fixed top-0 left-0 z-9999">
+            <div className={`flex justify-center items-center bg-white shadow-xl w-full ${scrolled ? "h-[70px]" : "h-[100px]"} fixed top-0 left-0 z-9999 transition-all duration-500`}>
                 <div className="container">
                     <div className="flex gap-8 w-full items-center">
                         <div className="flex gap-8 items-center w-full">
-                            <img src="bilinti-5.png" alt="bilinti-logo" className={scrolled ? "w-20 transition-all duration-500" : "w-30 transition-all duration-500"} />
+                            <img src="bilinti-5.png" alt="bilinti-logo" className={scrolled ? "h-[60px] transition-all duration-500" : "h-[90px] transition-all duration-500"} />
                             <input type="text" className="outline-none border-b-1 w-full" placeholder="Haber Ara" />
                         </div>
                         <ul className={`flex gap-4 transition-all duration-500
                         xl:items-center xl:relative xl:flex-row xl:w-full xl:top-0 xl:bg-transparent xl:h-auto xl:p-0 xl:transform-none
-                        absolute right-0 flex-col ${scrolled ? "top-[80px]" : "top-[109px]"} w-[300px] bg-white h-[100vh] p-6 items-end ${menu ? "transform-[translateX(0)]" : "transform-[translateX(300px)]"}
+                        absolute right-0 flex-col ${scrolled ? "top-[70px]" : "top-[100px]"} w-[300px] bg-white h-[100vh] p-6 items-end ${menu ? "transform-[translateX(0)]" : "transform-[translateX(300px)]"}
                     `}>
                             {menu &&
                                 <li>
