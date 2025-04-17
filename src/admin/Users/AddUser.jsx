@@ -1,5 +1,6 @@
 import { Button, Spin, Form, message, Input, Select } from "antd";
 import { LoadingOutlined } from '@ant-design/icons';
+import { token } from "../../layouts/GetUserData";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -18,7 +19,7 @@ function AddUser() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    'x-api-key': import.meta.env.VITE_API_KEY
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(values),
             });

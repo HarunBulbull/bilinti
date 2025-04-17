@@ -6,9 +6,9 @@ import { BrowserRouter } from 'react-router-dom'
 import { Layout } from './layouts/LayoutManager.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <Layout>
-      <App />
-    </Layout>
-  </BrowserRouter>
+    <BrowserRouter>
+      <Layout>
+        <App />
+      </Layout>
+    </BrowserRouter>
 )

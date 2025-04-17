@@ -2,10 +2,11 @@ import { Button, Table, Space, Popconfirm, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { TrashFill, ArrowClockwise } from "react-bootstrap-icons";
+import { token } from "../../layouts/GetUserData";
+
 
 function UserList() {
     const [messageApi, contextHolder] = message.useMessage();
-
     const apiURL = import.meta.env.VITE_API_BASE_URL;
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
@@ -14,7 +15,10 @@ function UserList() {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`${apiURL}/api/users`, { method: "GET" });
+            const response = await fetch(`${apiURL}/api/users`, { 
+                method: "GET",
+                headers: {'Authorization': `Bearer ${token}`}
+            });
             const data = await response.json();
             if (response.ok) { setData(data.data); }
             else { messageApi.error(data.message); }
@@ -77,7 +81,7 @@ function UserList() {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
-                    'x-api-key': import.meta.env.VITE_API_KEY
+                    'Authorization': `Bearer ${token}`
                 },
             });
             const data1 = await response.json();

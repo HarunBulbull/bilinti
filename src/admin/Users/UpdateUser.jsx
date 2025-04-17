@@ -1,7 +1,9 @@
 import { Button, Spin, Form, message, Input, Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { LoadingOutlined } from '@ant-design/icons';
+import { token } from "../../layouts/GetUserData";
 import { useState, useEffect } from "react";
+
 
 function UpdateUser() {
     const [messageApi, contextHolder] = message.useMessage();
@@ -14,7 +16,10 @@ function UpdateUser() {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`${apiURL}/api/users/${id}`, { method: "GET" });
+            const response = await fetch(`${apiURL}/api/users/${id}`, { 
+                method: "GET",
+                headers: {'Authorization': `Bearer ${token}`}
+            });
             const data = await response.json();
             if (response.ok) { 
                 form.setFieldValue("fullName", data.data.name);
@@ -47,7 +52,7 @@ function UpdateUser() {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    'x-api-key': import.meta.env.VITE_API_KEY
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(newData),
             });
