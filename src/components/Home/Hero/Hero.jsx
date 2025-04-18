@@ -1,21 +1,35 @@
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Autoplay } from 'swiper/modules';
+import { Link } from "react-router-dom";
+import { Spin } from "antd";
+import { LoadingOutlined } from '@ant-design/icons';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Hero.css';
 import 'swiper/css';
 
 
 
 function Hero() {
+  const apiURL = import.meta.env.VITE_API_BASE_URL;
+  const [loading, setLoading] = useState(false);
+
+    const [slides, setSlides] = useState([]);
     const swiperRef = useRef(null);
 
-    const slides = [
-        "/Manset/1.webp",
-        "/Manset/2.webp",
-        "/Manset/3.webp",
-        "/Manset/4.webp"
-    ]
+    const fetchData = async () => {
+        try {
+          setLoading(true);
+          const response = await fetch(`${apiURL}/api/cuff`, { method: "GET", });
+          const data = await response.json();
+          if (response.ok) { setSlides(data.data); }
+        }
+        catch (error) { console.log(error); }
+        finally { setLoading(false); }
+      }
+    
+      useEffect(() => { fetchData(); }, [])
 
     return (
         <div className="flex justify-center items-center md:pt-8 pt-4">
@@ -46,6 +60,8 @@ function Hero() {
                     </button>
 
                     <div className="w-full flex items-center justify-center overflow-hidden flex-col">
+                        <Spin spinning={loading} tip="Yükleniyor..." indicator={<LoadingOutlined spin />} size="large">
+                        
                         <Swiper
                             grabCursor={true}
                             centeredSlides={true}
@@ -58,12 +74,15 @@ function Hero() {
                         >
                             {slides.map((slide, index) => (
                                 <SwiperSlide key={index} className="w-full h-full flex justify-center items-center relative">
-                                    <div className="w-full h-full flex flex-col text-white text-center justify-center items-center relative">
-                                        <img src={slide} className="w-full aspect-18/9 max-w-[1400px] xl:rounded-xl object-cover" alt="slideimg" />
-                                    </div>
+                                    <Link to={slide.cuffPath}>
+                                        <div className="w-full h-full flex flex-col text-white text-center justify-center items-center relative">
+                                            <img src={apiURL + '/api/image/' + slide.cuffImage} className="w-full aspect-18/9 max-w-[1400px] xl:rounded-xl object-cover" alt="slideimg" />
+                                        </div>
+                                    </Link>
                                 </SwiperSlide>
                             ))}
                         </Swiper>
+                        </Spin>
                     </div>
                 </div>
         </div>

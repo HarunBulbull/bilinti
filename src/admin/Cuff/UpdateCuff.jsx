@@ -1,13 +1,12 @@
-import { Button, Spin, Form, message, Input, Select } from "antd";
+import { Button, Spin, Form, message, Input, InputNumber } from "antd";
 import { token, user } from "../../layouts/GetUserData";
 import { LoadingOutlined } from '@ant-design/icons';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import 'react-quill-new/dist/quill.snow.css';
 import { useEffect, useState } from "react";
-import ReactQuill from 'react-quill-new';
 import {Image} from "../Image/Image";
 
-function AddNew() {
+function UpdateCuff() {
     const [messageApi, contextHolder] = message.useMessage();
     const [openImage, setOpenImage] = useState(false);
     const apiURL = import.meta.env.VITE_API_BASE_URL;
@@ -15,6 +14,7 @@ function AddNew() {
     const [images, setImages] = useState("");
     const navigate = useNavigate();
     const [form] = Form.useForm();
+    const {id} = useParams();
 
     useEffect(() => {
         const body = document.body;
@@ -28,26 +28,38 @@ function AddNew() {
         setOpenImage(false)
     };
 
+    const fetchData = async () => {
+        try {
+            setLoading(true);
+            const response = await fetch(`${apiURL}/api/cuff/${id}`, {method: "GET"});
+            const data = await response.json();
+            if (response.ok) { 
+                form.setFieldValue("cuffOrder", data.data.cuffOrder);
+                form.setFieldValue("cuffPath", data.data.cuffPath);
+                setImages(data.data.cuffImage);
+            }
+            else { messageApi.error(data.message); }
+        }
+        catch (error) {
+            console.log(error);
+            messageApi.error("Bir hata oluştu: " + error)
+        }
+        finally { setLoading(false); }
+    }
+
+    useEffect(() => { fetchData(); }, [])
+
 
     const onFinish = async (values) => {
         if(images != ""){
             const formData = {
-                newAuthor: user._id,
-                newTitle: values.newTitle,
-                newImage: images,
-                newCategory: values.newCategory,
-                newContent: values.newContent,
-                newLink: values.newLink,
-                newSEO: {
-                    title: values.metaTitle,
-                    description: values.metaDescription,
-                    keywords: values.metaKeywords,
-                }
+                ...values,
+                cuffImage: images
             }
             try {
                 setLoading(true);
-                const response = await fetch(`${apiURL}/api/news`, {
-                    method: "POST",
+                const response = await fetch(`${apiURL}/api/cuff/${id}`, {
+                    method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                         'Authorization': `Bearer ${token}`
@@ -57,8 +69,7 @@ function AddNew() {
                 const data = await response.json();
                 if (response.ok) {
                     messageApi.success(data.message);
-                    form.resetFields();
-                    setImages("");
+                    navigate('/admin/mansetler');
                 }
                 else { messageApi.error(data.message); }
             }
@@ -88,83 +99,23 @@ function AddNew() {
 
                     <div className="flex sm:flex-row flex-col sm:gap-4">
                         <Form.Item
-                            label="Başlık"
-                            name="newTitle"
+                            label="Yönlendirilecek Link"
+                            name="cuffPath"
                             rules={[{ required: true, message: 'Lütfen bu alanı doldurun.' }]}
                             style={{ width: "100%" }}
                         >
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            label="Kategori"
-                            name="newCategory"
+                            label="Sıra"
+                            name="cuffOrder"
                             rules={[{ required: true, message: 'Lütfen bu alanı doldurun.' }]}
                             style={{ width: "100%" }}
                         >
-                            <Select
-                                options={[
-                                    { value: "Gündem", label: "Gündem" },
-                                    { value: "Spor", label: "Spor" },
-                                    { value: "Ekonomi", label: "Ekonomi" },
-                                    { value: "Magazin", label: "Magazin" },
-                                    { value: "Siyaset", label: "Siyaset" },
-                                    { value: "Teknoloji", label: "Teknoloji" },
-                                    { value: "Sağlık", label: "Sağlık" },
-                                    { value: "Bilim", label: "Bilim" },
-                                    { value: "Sanat", label: "Sanat" }
-                                ]}
-                            />
+                            <InputNumber style={{ width: "100%" }}/>
                         </Form.Item>
                     </div>
 
-                    <Form.Item
-                        label="İçerik"
-                        name="newContent"
-                        rules={[{ required: true, message: 'Lütfen bu alanı doldurun.' }]}
-                        style={{ width: "100%" }}
-                    >
-                        <ReactQuill style={{
-                            backgroundColor: "white"
-                        }} />
-                    </Form.Item>
-
-                    <div className="flex sm:flex-row flex-col sm:gap-4">
-                        <Form.Item
-                            label="Meta Başlığı"
-                            name="metaTitle"
-                            rules={[{ required: true, message: 'Lütfen bu alanı doldurun.' }]}
-                            style={{ width: "100%" }}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="Meta Açıklaması"
-                            name="metaDescription"
-                            rules={[{ required: true, message: 'Lütfen bu alanı doldurun.' }]}
-                            style={{ width: "100%" }}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </div>
-
-                    <div className="flex sm:flex-row flex-col sm:gap-4">
-                        <Form.Item
-                            label="Etiketler (Virgül ile ayırınız.)"
-                            name="metaKeywords"
-                            rules={[{ required: true, message: 'Lütfen bu alanı doldurun.' }]}
-                            style={{ width: "100%" }}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="Haber Bağlantısı"
-                            name="newLink"
-                            rules={[{ required: true, message: 'Lütfen bu alanı doldurun.' }]}
-                            style={{ width: "100%" }}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="flex flex-col gap-4 w-full">
                             <Button className="w-full" type="primary" onClick={() => setOpenImage(true)} style={{ width: "100%" }}>Resim Seç</Button>
@@ -186,4 +137,4 @@ function AddNew() {
     )
 }
 
-export default AddNew
+export default UpdateCuff

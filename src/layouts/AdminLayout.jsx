@@ -6,7 +6,8 @@ import {
   Person,
   List,
   BoxArrowLeft,
-  FileEarmark
+  FileEarmark,
+  Newspaper
 } from 'react-bootstrap-icons';
 import Cookies from 'js-cookie';
 import Login from "../admin/Login/Login";
@@ -69,6 +70,30 @@ function AdminLayout({ children }) {
           path: "/admin/haber-ekle",
           onClick: () => {
             navigate("/admin/haber-ekle");
+          },
+        },
+      ],
+    },
+    {
+      key: "7",
+      icon: <Newspaper />,
+      label: "Manşetler",
+      path: "/",
+      children: [
+        {
+          key: "8",
+          label: "Manşetler",
+          path: "/admin/mansetler",
+          onClick: () => {
+            navigate(`/admin/mansetler`);
+          },
+        },
+        {
+          key: "9",
+          label: "Manşet Ekle",
+          path: "/admin/manset-ekle",
+          onClick: () => {
+            navigate("/admin/manset-ekle");
           },
         },
       ],

@@ -9,7 +9,8 @@ const NewsSchema = mongoose.Schema({
     newContent: { type: String, required: true },
     newLink: { type: String, required: true },
     newSEO: { type: Object, required: true },
-    newStatus: { type: String, required: true, default: "Onay bekliyor"}
+    newStatus: { type: String, required: true, default: "Onay bekliyor"},
+    newViews: { type: Number, default: 0},
 }, { timestamps: true })
 
 

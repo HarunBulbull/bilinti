@@ -7,6 +7,9 @@ import UpdateUser from "./admin/Users/UpdateUser"
 import AddNew from "./admin/News/AddNew"
 import News from "./admin/News/News"
 import NewDetailPage from "./admin/News/NewDetail"
+import AddCuff from "./admin/Cuff/AddCuff"
+import Cuffs from "./admin/Cuff/Cuffs"
+import UpdateCuff from "./admin/Cuff/UpdateCuff"
 
 function App() {
 
@@ -23,6 +26,9 @@ function App() {
         <Route path='haber-ekle' element={<AddNew />} />
         <Route path='haberler' element={<News />} />
         <Route path='haber-detay/:id' element={<NewDetailPage />} />
+        <Route path='manset-ekle' element={<AddCuff />} />
+        <Route path='manset-duzenle/:id' element={<UpdateCuff />} />
+        <Route path='mansetler' element={<Cuffs />} />
       </Route>
     </Routes>
   )
