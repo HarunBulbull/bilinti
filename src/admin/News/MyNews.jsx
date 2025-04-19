@@ -1,12 +1,12 @@
 import { Button, Table, Radio, message, Badge, Flex, Space, Popconfirm } from "antd";
-import { TrashFill, InfoLg } from "react-bootstrap-icons";
-import { token } from "../../layouts/GetUserData";
+import { TrashFill, ArrowClockwise } from "react-bootstrap-icons";
+import { token, user } from "../../layouts/GetUserData";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import moment from "moment/moment";
 
 
-function News() {
+function MyNews() {
   const [messageApi, contextHolder] = message.useMessage();
   const apiURL = import.meta.env.VITE_API_BASE_URL;
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ function News() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${apiURL}/api/news/admin/${index}/${take}/${status}`, {
+      const response = await fetch(`${apiURL}/api/news/author/${user._id}/${index}/${take}/${status}`, {
         method: "GET",
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -91,7 +91,7 @@ function News() {
           >
             <Button type="primary" danger><TrashFill /></Button>
           </Popconfirm>
-          <Button type="primary" onClick={() => navigate(`/admin/haber-detay/${id}`)}><InfoLg /></Button>
+          <Button type="primary" onClick={() => navigate(`/admin/haber-guncelle/${id}`)}><ArrowClockwise /></Button>
         </Space>
       )
     },
@@ -163,4 +163,4 @@ function News() {
   )
 }
 
-export default News
+export default MyNews

@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import moment from "moment/moment";
 
 
-function News() {
+function Columns() {
   const [messageApi, contextHolder] = message.useMessage();
   const apiURL = import.meta.env.VITE_API_BASE_URL;
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ function News() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${apiURL}/api/news/admin/${index}/${take}/${status}`, {
+      const response = await fetch(`${apiURL}/api/column/admin/${index}/${take}/${status}`, {
         method: "GET",
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -39,28 +39,21 @@ function News() {
 
   const Columns = [
     {
-      title: 'Resim',
-      dataIndex: 'newImage',
-      key: 'newImage',
-      render: (image) => <img src={apiURL + '/api/image/' + image} style={{ height: "70px" }} />
-
-    },
-    {
       title: 'Başlık',
-      dataIndex: 'newTitle',
-      key: 'newTitle',
+      dataIndex: 'columnTitle',
+      key: 'columnTitle',
       render: (text) => <p>{text}</p>
     },
     {
       title: 'Yazar',
-      dataIndex: 'newAuthor',
-      key: 'newAuthor',
+      dataIndex: 'columnAuthor',
+      key: 'columnAuthor',
       render: (item) => <div className="flex flex-col"><p>{item.fullName}</p><p>{item.email}</p></div>
     },
     {
       title: 'Durum',
-      dataIndex: 'newStatus',
-      key: 'newStatus',
+      dataIndex: 'columnStatus',
+      key: 'columnStatus',
       render: (status) => <Badge status={status === "Onay bekliyor" ? "warning" : (status === "Yayınlandı" ? "success" : "error")} text={status} />
     },
     {
@@ -70,12 +63,6 @@ function News() {
       render: (date) => <p>{moment(date).format("DD.MM.YYYY H:mm")}</p>
     },
     {
-      title: 'Görüntülenme',
-      dataIndex: 'newViews',
-      key: 'newViews',
-      render: (view) => <p>{view}</p>
-    },
-    {
       title: 'Eylemler',
       dataIndex: '_id',
       key: '_id',
@@ -83,24 +70,24 @@ function News() {
       render: (id) => (
         <Space>
           <Popconfirm
-            title="Haberi Sil"
-            description="Haberi silmek istediğinize emin misiniz?"
+            title="Köşe Yazısını Sil"
+            description="Köşe Yazısını  silmek istediğinize emin misiniz?"
             okText="Sil"
             cancelText="İptal"
-            onConfirm={() => deleteNew(id)}
+            onConfirm={() => deleteColumn(id)}
           >
             <Button type="primary" danger><TrashFill /></Button>
           </Popconfirm>
-          <Button type="primary" onClick={() => navigate(`/admin/haber-detay/${id}`)}><InfoLg /></Button>
+          <Button type="primary" onClick={() => navigate(`/admin/kose-yazisi-detay/${id}`)}><InfoLg /></Button>
         </Space>
       )
     },
   ];
 
-  const deleteNew = async (id) => {
+  const deleteColumn = async (id) => {
     try {
         setLoading(true);
-        const response = await fetch(`${apiURL}/api/news/${id}`, {
+        const response = await fetch(`${apiURL}/api/column/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -121,7 +108,6 @@ function News() {
     }
     finally { setLoading(false); }
 };
-
 
   return (
     <Flex vertical className="w-full" gap="large">
@@ -163,4 +149,4 @@ function News() {
   )
 }
 
-export default News
+export default Columns

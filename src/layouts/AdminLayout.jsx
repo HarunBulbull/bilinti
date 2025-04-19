@@ -7,7 +7,8 @@ import {
   List,
   BoxArrowLeft,
   FileEarmark,
-  Newspaper
+  Newspaper,
+  BlockquoteLeft
 } from 'react-bootstrap-icons';
 import Cookies from 'js-cookie';
 import Login from "../admin/Login/Login";
@@ -66,6 +67,14 @@ function AdminLayout({ children }) {
         },
         {
           key: "6",
+          label: "Haberlerim",
+          path: "/admin/haberlerim",
+          onClick: () => {
+            navigate(`/admin/haberlerim`);
+          },
+        },
+        {
+          key: "7",
           label: "Haber Ekle",
           path: "/admin/haber-ekle",
           onClick: () => {
@@ -75,13 +84,13 @@ function AdminLayout({ children }) {
       ],
     },
     {
-      key: "7",
+      key: "8",
       icon: <Newspaper />,
       label: "Manşetler",
       path: "/",
       children: [
         {
-          key: "8",
+          key: "9",
           label: "Manşetler",
           path: "/admin/mansetler",
           onClick: () => {
@@ -89,11 +98,43 @@ function AdminLayout({ children }) {
           },
         },
         {
-          key: "9",
+          key: "10",
           label: "Manşet Ekle",
           path: "/admin/manset-ekle",
           onClick: () => {
             navigate("/admin/manset-ekle");
+          },
+        },
+      ],
+    },
+    {
+      key: "11",
+      icon: <BlockquoteLeft />,
+      label: "Köşe Yazıları",
+      path: "/",
+      children: [
+        {
+          key: "12",
+          label: "Köşe Yazıları",
+          path: "/admin/kose-yazilari",
+          onClick: () => {
+            navigate(`/admin/kose-yazilari`);
+          },
+        },
+        {
+          key: "13",
+          label: "Köşe Yazılarım",
+          path: "/admin/kose-yazilarim",
+          onClick: () => {
+            navigate(`/admin/kose-yazilarim`);
+          },
+        },
+        {
+          key: "14",
+          label: "Köşe Yazısı Ekle",
+          path: "/admin/kose-yazisi-ekle",
+          onClick: () => {
+            navigate("/admin/kose-yazisi-ekle");
           },
         },
       ],

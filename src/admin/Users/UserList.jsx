@@ -100,7 +100,10 @@ function UserList() {
     };
 
     return (
-        <Table dataSource={data} columns={Columns} rowKey={(record) => record._id} loading={loading} scroll={{ x: 400 }} size="small" />
+        <>
+            {contextHolder}
+            <Table dataSource={data} columns={Columns} rowKey={(record) => record._id} loading={loading} scroll={{ x: 400 }} size="small" />
+        </>
     )
 }
 

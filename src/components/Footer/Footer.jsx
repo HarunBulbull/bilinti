@@ -37,7 +37,7 @@ function Footer() {
     ]
 
     return (
-        <footer className="w-full bg-[url(bilinti-3.png)] bg-no-repeat bg-cover bg-fixed" style={{boxShadow: "0px 0px 20px rgba(0,0,0,.7)"}}>
+        <footer className="w-full bg-[url(/bilinti-3.png)] bg-no-repeat bg-cover bg-fixed" style={{boxShadow: "0px 0px 20px rgba(0,0,0,.7)"}}>
             <div className="w-full h-full bg-[rgba(0,0,0,.6)] p-8 flex justify-center items-center flex-col gap-8">
                 <div className="container grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4">
                     <div className="flex flex-col items-start justify-start gap-4 sm:border-r-1 border-white  h-full">

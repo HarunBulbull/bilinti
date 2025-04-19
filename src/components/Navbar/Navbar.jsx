@@ -88,7 +88,7 @@ function Navbar() {
                 <div className="container">
                     <div className="flex gap-8 w-full items-center">
                         <div className="flex gap-8 items-center w-full">
-                            <img src="bilinti-5.png" alt="bilinti-logo" className={scrolled ? "h-[60px] transition-all duration-500" : "h-[90px] transition-all duration-500"} />
+                            <img src="/bilinti-5.png" alt="bilinti-logo" className={scrolled ? "h-[60px] transition-all duration-500" : "h-[90px] transition-all duration-500"} />
                             <input type="text" className="outline-none border-b-1 w-full" placeholder="Haber Ara" />
                         </div>
                         <ul className={`flex gap-4 transition-all duration-500
