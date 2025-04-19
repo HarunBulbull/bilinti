@@ -28,16 +28,16 @@ function Navbar() {
     }, []);
 
     const list = [
-        { path: '/', name: 'Son Dakika' },
-        { path: '/', name: 'Gündem' },
-        { path: '/', name: 'Spor' },
-        { path: '/', name: 'Ekonomi' },
-        { path: '/', name: 'Magazin' },
-        { path: '/', name: 'Siyaset' },
-        { path: '/', name: 'Teknoloji' },
-        { path: '/', name: 'Sağlık' },
-        { path: '/', name: 'Bilim' },
-        { path: '/', name: 'Sanat' }
+        { path: '/son-dakika', name: 'Son Dakika' },
+        { path: '/kategori/gündem', name: 'Gündem' },
+        { path: '/kategori/spor', name: 'Spor' },
+        { path: '/kategori/ekonomi', name: 'Ekonomi' },
+        { path: '/kategori/magazin', name: 'Magazin' },
+        { path: '/kategori/siyaset', name: 'Siyaset' },
+        { path: '/kategori/teknoloji', name: 'Teknoloji' },
+        { path: '/kategori/sağlık', name: 'Sağlık' },
+        { path: '/kategori/bilim', name: 'Bilim' },
+        { path: '/kategori/sanat', name: 'Sanat' }
     ];
 
     const handleMenu = () => {
@@ -88,7 +88,9 @@ function Navbar() {
                 <div className="container">
                     <div className="flex gap-8 w-full items-center">
                         <div className="flex gap-8 items-center w-full">
-                            <img src="/bilinti-5.png" alt="bilinti-logo" className={scrolled ? "h-[60px] transition-all duration-500" : "h-[90px] transition-all duration-500"} />
+                            <Link to='/' style={{width: "auto"}}>
+                                <img src="/bilinti-5.png" alt="bilinti-logo" className={scrolled ? "h-[60px] transition-all duration-500" : "h-[90px] transition-all duration-500"} />
+                            </Link>
                             <input type="text" className="outline-none border-b-1 w-full" placeholder="Haber Ara" />
                         </div>
                         <ul className={`flex gap-4 transition-all duration-500

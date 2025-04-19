@@ -120,7 +120,7 @@ router.get("/:skip/:take", async (req, res) => {
             .limit(Number(req.params.take))
             .populate('columnAuthor', 'fullName email')
 
-        const total = await Columns.countDocuments();
+        const total = await Columns.countDocuments({ columnStatus: "Yayınlandı" });
         res.status(200).json({ message: "Verilere başarıyla ulaşıldı!", data, total });
     } catch (error) {
         console.log(error);

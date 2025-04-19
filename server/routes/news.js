@@ -89,6 +89,40 @@ router.get("/homePage", async (req, res) => {
     }
 });
 
+router.get("/latest/:skip/:take", async (req, res) => {
+    try {
+        const data = await News.find(
+            {newStatus: "Yayınlandı"}, 
+            {_id: 0, newTitle: 1, newImage: 1, newCategory: 1, newLink: 1, createdAt: 1, newViews: 1}
+        ).sort({createdAt: -1}).skip(Number(req.params.skip)).limit(Number(req.params.take));
+        const total = await News.countDocuments({newStatus: "Yayınlandı"});
+
+        res.status(200).json({  message: "Verilere başarıyla ulaşıldı!", data, total });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "There is an error: " + error });
+    }
+});
+
+router.get("/category/:category/:skip/:take", async (req, res) => {
+    try {
+        const categoryParam = req.params.category;
+        const categoryRegex = new RegExp('^' + categoryParam + '$', 'i');
+        
+        const data = await News.find(
+            {newStatus: "Yayınlandı", newCategory: categoryRegex}, 
+            {_id: 0, newTitle: 1, newImage: 1, newCategory: 1, newLink: 1, createdAt: 1, newViews: 1}
+        ).sort({createdAt: -1}).skip(Number(req.params.skip)).limit(Number(req.params.take));
+        
+        const total = await News.countDocuments({newStatus: "Yayınlandı", newCategory: categoryRegex});
+
+        res.status(200).json({  message: "Verilere başarıyla ulaşıldı!", data, total });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "There is an error: " + error });
+    }
+});
+
 router.delete("/:id", authenticateToken, async (req, res) => {
     try {
         const deleted = await News.findByIdAndDelete(req.params.id);

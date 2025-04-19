@@ -18,6 +18,8 @@ import UpdateNew from "./admin/News/UpdateNew"
 import MyColumns from "./admin/Column/MyColumns"
 import UpdateColumn from "./admin/Column/UpdateColumn"
 import AllColumns from "./pages/AllColumns"
+import Latest from "./pages/Latest"
+import Category from "./pages/Category"
 
 function App() {
 
@@ -27,6 +29,8 @@ function App() {
       <Route path='/' element={<Home />}/>
       <Route path='/haber/:link' element={<NewDetail />}/>
       <Route path='/kose-yazilari' element={<AllColumns />}/>
+      <Route path='/son-dakika' element={<Latest />}/>
+      <Route path='/kategori/:category' element={<Category />}/>
 
       <Route path='/admin/*'>
         <Route path='kullanici-ekle' element={<AddUser />} />
