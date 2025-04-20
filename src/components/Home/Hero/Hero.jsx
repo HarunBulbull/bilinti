@@ -32,7 +32,7 @@ function Hero() {
       useEffect(() => { fetchData(); }, [])
 
     return (
-        <div className="flex justify-center items-center md:pt-8 pt-4">
+        <div className="flex justify-center items-center md:pt-8 pt-0">
 
                 {/*
                 <div className="hidden md:flex mt-6 justify-center items-center flex-col w-full">

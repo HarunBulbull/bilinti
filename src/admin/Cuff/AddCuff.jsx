@@ -16,6 +16,12 @@ function AddCuff() {
     const [form] = Form.useForm();
 
     useEffect(() => {
+        if (user.role != "admin" && user.role != "baseditor") {
+          navigate("/admin");
+        }
+      }, [user]);
+
+    useEffect(() => {
         const body = document.body;
         if (openImage) { body.style.overflow = 'hidden'; }
         else { body.style.overflow = 'auto'; }

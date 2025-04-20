@@ -1,6 +1,6 @@
 import { Button, Table, Radio, message, Badge, Flex, Space, Popconfirm } from "antd";
 import { TrashFill, InfoLg } from "react-bootstrap-icons";
-import { token } from "../../layouts/GetUserData";
+import { token, user } from "../../layouts/GetUserData";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import moment from "moment/moment";
@@ -16,6 +16,12 @@ function Columns() {
   const [take, setTake] = useState(10);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.role != "admin" && user.role != "baseditor") {
+      navigate("/admin");
+    }
+  }, [user]);
 
   const fetchData = async () => {
     try {

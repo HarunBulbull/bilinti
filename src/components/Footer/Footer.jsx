@@ -4,36 +4,32 @@ import { Link } from "react-router-dom"
 function Footer() {
 
     const news = [
-        { path: '/', name: 'Son Dakika' },
-        { path: '/', name: 'Gündem' },
-        { path: '/', name: 'Spor' },
-        { path: '/', name: 'Ekonomi' },
-        { path: '/', name: 'Magazin' },
-        { path: '/', name: 'Siyaset' },
-        { path: '/', name: 'Teknoloji' },
-        { path: '/', name: 'Sağlık' },
-        { path: '/', name: 'Bilim' },
-        { path: '/', name: 'Sanat' }
+        { path: '/son-dakika', name: 'Son Dakika' },
+        { path: '/kategori/gündem', name: 'Gündem' },
+        { path: '/kategori/spor', name: 'Spor' },
+        { path: '/kategori/ekonomi', name: 'Ekonomi' },
+        { path: '/kategori/magazin', name: 'Magazin' },
+        { path: '/kategori/siyaset', name: 'Siyaset' },
+        { path: '/kategori/teknoloji', name: 'Teknoloji' },
+        { path: '/kategori/sağlık', name: 'Sağlık' },
+        { path: '/kategori/bilim', name: 'Bilim' },
+        { path: '/kategori/sanat', name: 'Sanat' }
     ]
 
     const links = [
-        { path: '/', name: 'Hakkımızda' },
-        { path: '/', name: 'Ekibimiz' },
-        { path: '/', name: 'Kullanım Şartları' },
-        { path: '/', name: 'Gizlilik Politikası' },
-        { path: '/', name: 'Çerez Politikası' },
-        { path: '/', name: 'Kişisel Verilerin Korunması' },
-        { path: '/', name: 'İletişim' },
+        { path: '/hakkimizda', name: 'Hakkımızda' },
+        { path: '/ekibimiz', name: 'Ekibimiz' },
+        { path: '/kullanim-sartlari', name: 'Kullanım Şartları' },
+        { path: '/gizlilik-politikasi', name: 'Gizlilik Politikası' },
+        { path: '/cerez-politikasi', name: 'Çerez Politikası' },
+        { path: '/kvkk', name: 'Kişisel Verilerin Korunması' },
+        { path: '/iletisim', name: 'İletişim' },
     ]
 
     const contact = [
-        { path: '/', name: 'Telegram' },
-        { path: '/', name: 'Whatsapp' },
-        { path: '/', name: 'Youtube' },
-        { path: '/', name: 'X' },
-        { path: '/', name: 'Instagram' },
-        { path: '/', name: 'Facebook' },
-        { path: '/', name: 'LinkedIn' },
+        { path: 'https://youtube.com/@bilintihaber?si=fTjLEcZ6jSm1TOnZ', name: 'Youtube' },
+        { path: 'https://www.instagram.com/bilintihaber?igsh=bTVxcnpycms3bGZr', name: 'Instagram' },
+        { path: 'https://www.tiktok.com/@baysungur00?_t=ZS-8vfmmfXj2Yx&_r=1', name: 'TikTok' },
     ]
 
     return (
@@ -42,7 +38,7 @@ function Footer() {
                 <div className="container grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4">
                     <div className="flex flex-col items-start justify-start gap-4 sm:border-r-1 border-white  h-full">
                         <img src="/bilinti-5.png" alt="footer_logo" className="w-full" />
-                        <p className="clamp-p text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi congue justo vel velit consequat ultricies at quis diam. Aliquam in consectetur tortor.</p>
+                        <p className="clamp-p text-white self-center">Haberin Nabzı Burada!</p>
                     </div>
                     <div className="flex flex-col items-start justify-start gap-4 lg:border-r-1 border-white h-full">
                         <h5 className="clamp-h5 font-semibold text-white">Haberler</h5>
@@ -87,15 +83,16 @@ function Footer() {
                         <ul>
                             {contact.map((e, k) => (
                                 <li key={k}>
-                                    <Link
-                                        to={e.path}
+                                    <a
+                                        href={e.path}
+                                        target="_blank"
                                         className="
                                     text-white duration-300 transition whitespace-nowrap clamp-p
                                     hover:text-(--primary)
                                 "
                                     >
                                         {e.name}
-                                    </Link>
+                                    </a>
                                 </li>
                             ))}
                         </ul>

@@ -1,8 +1,8 @@
+import { TrashFill, ArrowClockwise } from "react-bootstrap-icons";
 import { Button, Table, Space, Popconfirm, message } from "antd";
+import { token, user } from "../../layouts/GetUserData";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { TrashFill, ArrowClockwise } from "react-bootstrap-icons";
-import { token } from "../../layouts/GetUserData";
 
 
 function UserList() {
@@ -11,6 +11,12 @@ function UserList() {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if(user.role != "admin"){
+            navigate("/admin");
+        }
+    }, [user]);
 
     const fetchData = async () => {
         try {

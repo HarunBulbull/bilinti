@@ -20,6 +20,11 @@ import UpdateColumn from "./admin/Column/UpdateColumn"
 import AllColumns from "./pages/AllColumns"
 import Latest from "./pages/Latest"
 import Category from "./pages/Category"
+import About from "./pages/About"
+import Usage from "./pages/Privacy"
+import Privacy from "./pages/Privacy"
+import Cookies from "./pages/Cookies"
+import Kvkk from "./pages/Kvkk"
 
 function App() {
 
@@ -31,6 +36,11 @@ function App() {
       <Route path='/kose-yazilari' element={<AllColumns />}/>
       <Route path='/son-dakika' element={<Latest />}/>
       <Route path='/kategori/:category' element={<Category />}/>
+      <Route path='/hakkimizda' element={<About />}/>
+      <Route path='/kullanim-sartlari' element={<Usage />}/>
+      <Route path='/gizlilik-politikasi' element={<Privacy />}/>
+      <Route path='/cerez-politikasi' element={<Cookies />}/>
+      <Route path='/kvkk' element={<Kvkk />}/>
 
       <Route path='/admin/*'>
         <Route path='kullanici-ekle' element={<AddUser />} />

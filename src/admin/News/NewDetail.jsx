@@ -1,7 +1,7 @@
 import { Button, Table, Form, Space, Popconfirm, message, Badge, Spin, Input, Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
+import { token, user } from "../../layouts/GetUserData";
 import { LoadingOutlined } from '@ant-design/icons';
-import { token } from "../../layouts/GetUserData";
 import 'react-quill-new/dist/quill.snow.css';
 import { useState, useEffect } from "react";
 import ReactQuill from 'react-quill-new';
@@ -20,6 +20,12 @@ function NewDetailPage() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { id } = useParams();
+
+  useEffect(() => {
+    if (user.role != "admin" && user.role != "baseditor") {
+      navigate("/admin");
+    }
+  }, [user]);
 
   useEffect(() => {
     const body = document.body;

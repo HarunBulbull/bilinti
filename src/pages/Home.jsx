@@ -3,6 +3,7 @@ import Column from "../components/Home/Column/Column"
 import Hero from "../components/Home/Hero/Hero"
 import Likeds from "../components/Home/Likeds/Likeds"
 import Latest from "../components/Home/Latest/Latest";
+import { Helmet } from "react-helmet";
 
 function Home() {
   const apiURL = import.meta.env.VITE_API_BASE_URL;
@@ -25,6 +26,12 @@ function Home() {
 
   return (
     <>
+    <Helmet>
+        <title>Ana Sayfa | Bilinti</title>
+        <meta name="description" content="BBilinti Haber ile gündemi yakalayın! Tarafsız habercilik anlayışıyla Türkiye ve dünyadan en güncel haberler, analizler ve özel dosyalar bir tık uzağınızda." />
+        <meta name="keywords" content="haber, bil, araştır" />
+        <link rel="canonical" href="https://www.bilintihaber.com" />
+      </Helmet>
       <Hero />
       <div className="flex flex-col justify-center items-center w-full pt-4 pb-8 mt-4">
         <div className="bg-gray-100 w-full flex justify-center items-center py-4 mb-6">

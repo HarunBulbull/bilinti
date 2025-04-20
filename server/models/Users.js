@@ -6,6 +6,7 @@ const UsersSchema = mongoose.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     role: { type: String, default: "user" },
+    tokenVersion: { type: Number, default: 0 }
 }, { timestamps: true })
 
 

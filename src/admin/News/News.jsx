@@ -1,6 +1,6 @@
 import { Button, Table, Radio, message, Badge, Flex, Space, Popconfirm } from "antd";
 import { TrashFill, InfoLg } from "react-bootstrap-icons";
-import { token } from "../../layouts/GetUserData";
+import { token, user } from "../../layouts/GetUserData";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import moment from "moment/moment";
@@ -16,6 +16,12 @@ function News() {
   const [take, setTake] = useState(10);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.role != "admin" && user.role != "baseditor") {
+      navigate("/admin");
+    }
+  }, [user]);
 
   const fetchData = async () => {
     try {
@@ -99,28 +105,28 @@ function News() {
 
   const deleteNew = async (id) => {
     try {
-        setLoading(true);
-        const response = await fetch(`${apiURL}/api/news/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                'Authorization': `Bearer ${token}`
-            },
-        });
-        const data1 = await response.json();
-        if (response.ok) { 
-            message.success(data1.message);
-            const filteredData = data.filter((el) => el._id !== id);
-            setData(filteredData)
-        }
-        else { message.error(data1.message); }
+      setLoading(true);
+      const response = await fetch(`${apiURL}/api/news/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`
+        },
+      });
+      const data1 = await response.json();
+      if (response.ok) {
+        message.success(data1.message);
+        const filteredData = data.filter((el) => el._id !== id);
+        setData(filteredData)
+      }
+      else { message.error(data1.message); }
     }
     catch (error) {
-        console.log(error);
-        messageApi.error("Bir hata oluştu: " + error)
+      console.log(error);
+      messageApi.error("Bir hata oluştu: " + error)
     }
     finally { setLoading(false); }
-};
+  };
 
 
   return (
@@ -129,10 +135,10 @@ function News() {
       <Radio.Group
         block
         options={[
-          {label: "Hepsi", value: "all"},
-          {label: "Onay bekliyor", value: "Onay bekliyor"},
-          {label: "Yayınlandı", value: "Yayınlandı"},
-          {label: "Reddedildi", value: "Reddedildi"}
+          { label: "Hepsi", value: "all" },
+          { label: "Onay bekliyor", value: "Onay bekliyor" },
+          { label: "Yayınlandı", value: "Yayınlandı" },
+          { label: "Reddedildi", value: "Reddedildi" }
         ]}
         value={status}
         onChange={(e) => setStatus(e.target.value)}

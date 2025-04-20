@@ -20,13 +20,9 @@ const { Sider, Header, Content } = Layout;
 
 function AdminLayout({ children }) {
   const [collapsed, setCollapsed] = useState(window.innerWidth > 768 ? false : true);
-  const apiURL = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
 
-  const menuItems = [
-
-
-
+  const adminItems = [
     {
       key: "1",
       icon: <Person />,
@@ -149,10 +145,172 @@ function AdminLayout({ children }) {
         window.location.reload();
       },
     },
+  ];
+
+  const headItems = [
+    {
+      key: "4",
+      icon: <FileEarmark />,
+      label: "Haberler",
+      path: "/",
+      children: [
+        {
+          key: "5",
+          label: "Haber Listesi",
+          path: "/admin/haberler",
+          onClick: () => {
+            navigate(`/admin/haberler`);
+          },
+        },
+        {
+          key: "6",
+          label: "Haberlerim",
+          path: "/admin/haberlerim",
+          onClick: () => {
+            navigate(`/admin/haberlerim`);
+          },
+        },
+        {
+          key: "7",
+          label: "Haber Ekle",
+          path: "/admin/haber-ekle",
+          onClick: () => {
+            navigate("/admin/haber-ekle");
+          },
+        },
+      ],
+    },
+    {
+      key: "8",
+      icon: <Newspaper />,
+      label: "Manşetler",
+      path: "/",
+      children: [
+        {
+          key: "9",
+          label: "Manşetler",
+          path: "/admin/mansetler",
+          onClick: () => {
+            navigate(`/admin/mansetler`);
+          },
+        },
+        {
+          key: "10",
+          label: "Manşet Ekle",
+          path: "/admin/manset-ekle",
+          onClick: () => {
+            navigate("/admin/manset-ekle");
+          },
+        },
+      ],
+    },
+    {
+      key: "11",
+      icon: <BlockquoteLeft />,
+      label: "Köşe Yazıları",
+      path: "/",
+      children: [
+        {
+          key: "12",
+          label: "Köşe Yazıları",
+          path: "/admin/kose-yazilari",
+          onClick: () => {
+            navigate(`/admin/kose-yazilari`);
+          },
+        },
+        {
+          key: "13",
+          label: "Köşe Yazılarım",
+          path: "/admin/kose-yazilarim",
+          onClick: () => {
+            navigate(`/admin/kose-yazilarim`);
+          },
+        },
+        {
+          key: "14",
+          label: "Köşe Yazısı Ekle",
+          path: "/admin/kose-yazisi-ekle",
+          onClick: () => {
+            navigate("/admin/kose-yazisi-ekle");
+          },
+        },
+      ],
+    },
+    {
+      key: "99",
+      icon: <BoxArrowLeft />,
+      label: "Çıkış Yap",
+      path: "/admin",
+      onClick: () => {
+        Cookies.remove('user');
+        window.location.reload();
+      },
+    },
+  ]
+
+  const authorItems = [
+    {
+      key: "4",
+      icon: <FileEarmark />,
+      label: "Haberler",
+      path: "/",
+      children: [
+        {
+          key: "6",
+          label: "Haberlerim",
+          path: "/admin/haberlerim",
+          onClick: () => {
+            navigate(`/admin/haberlerim`);
+          },
+        },
+        {
+          key: "7",
+          label: "Haber Ekle",
+          path: "/admin/haber-ekle",
+          onClick: () => {
+            navigate("/admin/haber-ekle");
+          },
+        },
+      ],
+    },
+    {
+      key: "11",
+      icon: <BlockquoteLeft />,
+      label: "Köşe Yazıları",
+      path: "/",
+      children: [
+        {
+          key: "13",
+          label: "Köşe Yazılarım",
+          path: "/admin/kose-yazilarim",
+          onClick: () => {
+            navigate(`/admin/kose-yazilarim`);
+          },
+        },
+        {
+          key: "14",
+          label: "Köşe Yazısı Ekle",
+          path: "/admin/kose-yazisi-ekle",
+          onClick: () => {
+            navigate("/admin/kose-yazisi-ekle");
+          },
+        },
+      ],
+    },
+    {
+      key: "99",
+      icon: <BoxArrowLeft />,
+      label: "Çıkış Yap",
+      path: "/admin",
+      onClick: () => {
+        Cookies.remove('user');
+        window.location.reload();
+      },
+    },
   ]
 
   const getActiveKey = () => {
-    for (const item of menuItems) {
+    for (const item of user.role === "admin" ? adminItems : (user.role === "baseditor" ? headItems : authorItems)) {
       if (item.children) {
         for (const child of item.children) {
           if (child.path === window.location.pathname) {
@@ -169,7 +327,7 @@ function AdminLayout({ children }) {
   };
 
   const getPageTitle = () => {
-    for (const item of menuItems) {
+    for (const item of user.role === "admin" ? adminItems : (user.role === "baseditor" ? headItems : authorItems)) {
       if (item.children) {
         for (const child of item.children) {
           if (child.path === window.location.pathname) {
@@ -197,7 +355,7 @@ function AdminLayout({ children }) {
               theme="light"
               mode="inline"
               defaultSelectedKeys={[getActiveKey()]}
-              items={menuItems}
+              items={user.role === "admin" ? adminItems : (user.role === "baseditor" ? headItems : authorItems)}
             />
           </Sider>
           <Layout>

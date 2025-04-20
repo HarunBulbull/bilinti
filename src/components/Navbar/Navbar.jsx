@@ -88,7 +88,7 @@ function Navbar() {
                 <div className="container">
                     <div className="flex gap-8 w-full items-center">
                         <div className="flex gap-8 items-center w-full">
-                            <Link to='/' style={{width: "auto"}}>
+                            <Link to='/' style={{minWidth: scrolled ? "94px" : "140px", transition: "ease .5s"}}>
                                 <img src="/bilinti-5.png" alt="bilinti-logo" className={scrolled ? "h-[60px] transition-all duration-500" : "h-[90px] transition-all duration-500"} />
                             </Link>
                             <input type="text" className="outline-none border-b-1 w-full" placeholder="Haber Ara" />

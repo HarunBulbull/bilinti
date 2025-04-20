@@ -1,8 +1,8 @@
 import { Button, Spin, Form, message, Input, Select } from "antd";
+import { token, user } from "../../layouts/GetUserData";
 import { LoadingOutlined } from '@ant-design/icons';
-import { token } from "../../layouts/GetUserData";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function AddUser() {
     const [messageApi, contextHolder] = message.useMessage();
@@ -10,6 +10,12 @@ function AddUser() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [form] = Form.useForm();
+
+    useEffect(() => {
+        if(user.role != "admin"){
+            navigate("/admin");
+        }
+    }, [user]);
 
     const onFinish = async (values) => {
         if(values.password != values.passwordAgain){return messageApi.error("Şifreler uyuşmuyor.");}

@@ -1,7 +1,7 @@
 import { Button, Spin, Form, message, Input, Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
+import { token, user } from "../../layouts/GetUserData";
 import { LoadingOutlined } from '@ant-design/icons';
-import { token } from "../../layouts/GetUserData";
 import { useState, useEffect } from "react";
 
 
@@ -12,6 +12,12 @@ function UpdateUser() {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const { id } = useParams();
+
+    useEffect(() => {
+        if(user.role != "admin"){
+            navigate("/admin");
+        }
+    }, [user]);
 
     const fetchData = async () => {
         try {

@@ -1,6 +1,6 @@
 import { TrashFill, ArrowClockwise } from "react-bootstrap-icons";
 import { Button, Table, message, Space, Popconfirm} from "antd";
-import { token } from "../../layouts/GetUserData";
+import { token, user } from "../../layouts/GetUserData";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -11,6 +11,12 @@ function Cuffs() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.role != "admin" && user.role != "baseditor") {
+      navigate("/admin");
+    }
+  }, [user]);
 
   const fetchData = async () => {
     try {

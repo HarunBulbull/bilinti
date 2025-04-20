@@ -46,8 +46,10 @@ function Category() {
   }, [category]);
 
   useEffect(() => {
-    fetchData();
-  }, [index, category]); 
+    if(hasMore){
+      fetchData();
+    }
+  }, [index, category, hasMore]); 
 
   const lastElementRef = useCallback(
     (node) => {

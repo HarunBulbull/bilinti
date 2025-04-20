@@ -46,6 +46,7 @@ router.post("/login", async (req, res) => {
             {
                 userId: existingUser._id,
                 email: existingUser.email,
+                tokenVersion: existingUser.tokenVersion
             },
             JWT_SECRET_KEY,
             { expiresIn: '1h' }
@@ -68,8 +69,12 @@ router.put("/:id", authenticateToken, async (req, res) => {
             hashedPassword = await bcryptjs.hash(req.body.password, 10);
             data = { ...data, password: hashedPassword }
         }
-        const updatedUser = await Users.findByIdAndUpdate(req.params.id, data)
-        res.status(201).json({ message: "Kullanıcı başarıyla oluşturuldu!", data: updatedUser });
+        const findUser = await Users.findById(req.params.id);
+        if(findUser){
+            const updatedUser = await Users.findByIdAndUpdate(req.params.id, {...data, tokenVersion: findUser.tokenVersion + 1 })
+            res.status(201).json({ message: "Kullanıcı başarıyla oluşturuldu!", data: updatedUser });
+        }
+        else{ res.status(500).json({ message: "Kullanıcı bulunamadı."}); }
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "There is an error: " + error });

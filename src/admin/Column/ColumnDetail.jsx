@@ -1,6 +1,6 @@
 import { Button, Spin, Form, message, Input, Badge } from "antd";
-import { token } from "../../layouts/GetUserData";
 import { LoadingOutlined } from '@ant-design/icons';
+import { token, user } from "../../layouts/GetUserData";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
@@ -12,6 +12,12 @@ function ColumnDetail() {
     const [data, setData] = useState(null);
     const navigate = useNavigate();
     const [form] = Form.useForm();
+
+    useEffect(() => {
+        if (user.role != "admin" && user.role != "baseditor") {
+          navigate("/admin");
+        }
+      }, [user]);
 
 
     const { id } = useParams();
