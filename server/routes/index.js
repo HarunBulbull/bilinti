@@ -6,6 +6,7 @@ const NewsRoute = require('./news.js');
 const ImageRoute = require("./image.js");
 const CuffRoute = require("./cuffs.js");
 const ColumnRoute = require("./column.js");
+const TeamRoute = require("./team.js");
 
 
 router.use("/users", UsersRoute);
@@ -13,6 +14,7 @@ router.use("/news", NewsRoute);
 router.use("/image", ImageRoute);
 router.use("/cuff", CuffRoute);
 router.use("/column", ColumnRoute);
+router.use("/team", TeamRoute);
 
 
 module.exports = router;

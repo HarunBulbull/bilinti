@@ -26,11 +26,25 @@ import Privacy from "./pages/Privacy"
 import Cookies from "./pages/Cookies"
 import Kvkk from "./pages/Kvkk"
 
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import AddTeam from "./admin/Team/AddTeam"
+import TeamMembers from "./admin/Team/TeamMembers"
+import UpdateTeam from "./admin/Team/UpdateTeam"
+import Team from "./pages/Team"
+import FourOFour from "./pages/FourOFour"
+
 function App() {
 
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location])
 
   return (
     <Routes>
+      <Route path='*' element={<FourOFour />}/>
       <Route path='/' element={<Home />}/>
       <Route path='/haber/:link' element={<NewDetail />}/>
       <Route path='/kose-yazilari' element={<AllColumns />}/>
@@ -41,6 +55,7 @@ function App() {
       <Route path='/gizlilik-politikasi' element={<Privacy />}/>
       <Route path='/cerez-politikasi' element={<Cookies />}/>
       <Route path='/kvkk' element={<Kvkk />}/>
+      <Route path='/ekibimiz' element={<Team />}/>
 
       <Route path='/admin/*'>
         <Route path='kullanici-ekle' element={<AddUser />} />
@@ -59,6 +74,9 @@ function App() {
         <Route path='kose-yazilarim' element={<MyColumns />} />
         <Route path='kose-yazisi-detay/:id' element={<ColumnDetail />} />
         <Route path='kose-yazisi-guncelle/:id' element={<UpdateColumn />} />
+        <Route path='ekip-ekle' element={<AddTeam />} />
+        <Route path='ekip' element={<TeamMembers />} />
+        <Route path='ekip-duzenle/:id' element={<UpdateTeam />} />
       </Route>
     </Routes>
   )

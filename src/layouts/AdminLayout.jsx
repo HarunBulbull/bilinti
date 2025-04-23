@@ -8,7 +8,8 @@ import {
   BoxArrowLeft,
   FileEarmark,
   Newspaper,
-  BlockquoteLeft
+  BlockquoteLeft,
+  People
 } from 'react-bootstrap-icons';
 import Cookies from 'js-cookie';
 import Login from "../admin/Login/Login";
@@ -131,6 +132,30 @@ function AdminLayout({ children }) {
           path: "/admin/kose-yazisi-ekle",
           onClick: () => {
             navigate("/admin/kose-yazisi-ekle");
+          },
+        },
+      ],
+    },
+    {
+      key: "14",
+      icon: <People />,
+      label: "Ekip",
+      path: "/",
+      children: [
+        {
+          key: "15",
+          label: "Ekip Üyeleri",
+          path: "/admin/ekip",
+          onClick: () => {
+            navigate(`/admin/ekip`);
+          },
+        },
+        {
+          key: "16",
+          label: "Ekip Üyesi Ekle",
+          path: "/admin/ekip-ekle",
+          onClick: () => {
+            navigate(`/admin/ekip-ekle`);
           },
         },
       ],

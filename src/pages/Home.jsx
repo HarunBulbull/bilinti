@@ -28,7 +28,7 @@ function Home() {
     <>
     <Helmet>
         <title>Ana Sayfa | Bilinti</title>
-        <meta name="description" content="BBilinti Haber ile gündemi yakalayın! Tarafsız habercilik anlayışıyla Türkiye ve dünyadan en güncel haberler, analizler ve özel dosyalar bir tık uzağınızda." />
+        <meta name="description" content="Bilinti Haber ile gündemi yakalayın! Tarafsız habercilik anlayışıyla Türkiye ve dünyadan en güncel haberler, analizler ve özel dosyalar bir tık uzağınızda." />
         <meta name="keywords" content="haber, bil, araştır" />
         <link rel="canonical" href="https://www.bilintihaber.com" />
       </Helmet>
