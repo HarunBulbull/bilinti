@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 function Navbar() {
     const [loading, setLoading] = useState(false);
+    const [search, setSearch] = useState("");
     const [menu, setMenu] = useState(false);
     const burger = useRef(null);
     const span1 = useRef(null);
     const span2 = useRef(null);
     const span3 = useRef(null);
+    const nav = useNavigate();
 
     const [scrolled, setScrolled] = useState(false);
 
@@ -91,7 +93,7 @@ function Navbar() {
                             <Link to='/' style={{minWidth: scrolled ? "94px" : "140px", transition: "ease .5s"}}>
                                 <img src="/bilinti-5.png" alt="bilinti-logo" className={scrolled ? "h-[60px] transition-all duration-500" : "h-[90px] transition-all duration-500"} />
                             </Link>
-                            <input type="text" className="outline-none border-b-1 w-full" placeholder="Haber Ara" />
+                            <input type="text" className="outline-none border-b-1 w-full" placeholder="Haber Ara" value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => e.key === "Enter" && nav('/ara/' + search)} />
                         </div>
                         <ul className={`flex gap-4 transition-all duration-500
                         xl:items-center xl:relative xl:flex-row xl:w-full xl:top-0 xl:bg-transparent xl:h-auto xl:p-0 xl:transform-none

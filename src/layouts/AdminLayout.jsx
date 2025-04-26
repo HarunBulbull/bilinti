@@ -9,7 +9,8 @@ import {
   FileEarmark,
   Newspaper,
   BlockquoteLeft,
-  People
+  People,
+  Telephone
 } from 'react-bootstrap-icons';
 import Cookies from 'js-cookie';
 import Login from "../admin/Login/Login";
@@ -159,6 +160,15 @@ function AdminLayout({ children }) {
           },
         },
       ],
+    },
+    {
+      key: "17",
+      icon: <Telephone />,
+      label: "İletişim Formları",
+      path: "/admin/iletisim",
+      onClick: () => {
+        navigate(`/admin/iletisim`);
+      },
     },
     {
       key: "99",

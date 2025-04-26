@@ -23,7 +23,7 @@ function Latest({ data, loading }) {
                     grabCursor={true}
                     slidesPerView={4.5}
                     breakpoints={{ 
-                        450: { slidesPerView: 1.5 },
+                        0: { slidesPerView: 1.5 },
                         768: { slidesPerView: 2.5 },
                         1024: { slidesPerView: 3.5 },
                         1350: { slidesPerView: 4.5 }

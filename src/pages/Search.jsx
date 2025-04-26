@@ -6,20 +6,20 @@ import { Breadcrumb } from "antd";
 import NewCard from "../components/Reusable/NewCard/NewCard";
 
 
-function Category() {
+function Search() {
   const apiURL = import.meta.env.VITE_API_BASE_URL;
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [index, setIndex] = useState(0);
   const [data, setData] = useState([]);
-  const { category } = useParams();
+  const { value } = useParams();
   const observer = useRef();
 
   const fetchData = async () => {
     try {
       if (loading || !hasMore) return;
       setLoading(true);
-      const response = await fetch(`${apiURL}/api/news/category/${category}/${index * 10}/${(index + 1) * 10}`, { method: "GET" });
+      const response = await fetch(`${apiURL}/api/news/search/${value}/${index * 10}/${(index + 1) * 10}`, { method: "GET" });
       const result = await response.json();
       if (response.ok) {
         if (result.data && result.data.length > 0) {
@@ -43,13 +43,13 @@ function Category() {
     setData([]);
     setHasMore(true);
     setIndex(0);
-  }, [category]);
+  }, [value]);
 
   useEffect(() => {
     if(hasMore){
       fetchData();
     }
-  }, [index, category, hasMore]); 
+  }, [index, value, hasMore]); 
 
   const lastElementRef = useCallback(
     (node) => {
@@ -74,14 +74,14 @@ function Category() {
   return (
     <div className="flex justify-center items-center gap-4 py-8">
       <Helmet>
-        <title>{category.toUpperCase()} Haberleri | Bilinti</title>
+        <title>Haber Ara | Bilinti</title>
         <meta name="description" content="Bilinti'nin köşe yazıları sayfasında gündeme dair derin analizler, uzman görüşleri ve farklı bakış açılarıyla kaleme alınmış yazılarla düşünce dünyanızı zenginleştirin." />
-        <meta name="keywords" content={"haber, son, dakika, bil, " + category} />
-        <link rel="canonical" href={"https://www.bilintihaber.com/kategori/" + category} />
+        <meta name="keywords" content={"haber, son, dakika, bil, " + value} />
+        <link rel="canonical" href={"https://www.bilintihaber.com/ara/" + value} />
       </Helmet>
       <div className="container">
         <div className="flex flex-col gap-4 min-h-[100vh]">
-          <h1 className="clamp-h1 font-bold">{category.toUpperCase()} Haberleri</h1>
+          <h1 className="clamp-h1 font-bold">Ara: {value}</h1>
           <Breadcrumb
             items={[
               {
@@ -89,7 +89,7 @@ function Category() {
                 title: <HomeOutlined />,
               },
               {
-                title: category.toUpperCase() + " Haberleri"
+                title: "Haber ara: " + value
               }
             ]}
           />
@@ -115,4 +115,4 @@ function Category() {
   );
 }
 
-export default Category;
+export default Search;

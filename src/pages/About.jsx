@@ -35,8 +35,8 @@ function About() {
               }
             ]}
           />
-          <div className="grid grid-cols-[2.5fr_1fr] gap-4 items-start">
-            <p className='clamp-p'>
+          <div className="grid grid-cols-1 sm:grid-cols-[2.5fr_1fr] gap-4 items-start">
+            <p className='clamp-p order-1'>
               Bilinti Haber, 9 Nisan 2025’te Talha Narman tarafından bir fikir olarak ortaya atılmış ve gönüllü kurucu ekip üyelerinin özverili çalışmalarıyla hayat bulmuş bir dijital haber platformudur. Amacımız, güvenilir, tarafsız ve güncel haberleri okuyucularımıza ulaştırarak haberin nabzını tutmaktır. Türkiye’den ve dünyadan gelişmeleri, şeffaf bir yayın anlayışıyla sunmayı hedefliyoruz.
               <br /><br />
               Gönüllü bir ekip olarak yola çıktık; editörlerimiz, yazarlarımız, çevirmenlerimiz ve teknik ekibimizle birlikte her gün daha iyi bir haber deneyimi sunmak için çalışıyoruz. Okuyucularımıza tarafsız, doğru ve erişilebilir bilgiler sunarken, yenilikçi yaklaşımlarımızla dijital medya dünyasında fark yaratmayı amaçlıyoruz.
@@ -45,7 +45,7 @@ function About() {
               <br/><br />
               Haberin Nabzı Burada!
             </p>
-            <img src="bilinti-4.png" className='w-full rounded-2xl' />
+            <img src="bilinti-4.png" className='w-full rounded-2xl order-0 sm:order-2' />
           </div>
         </div>
       </div>

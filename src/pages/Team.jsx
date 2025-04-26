@@ -53,7 +53,7 @@ function Team() {
           />
 
           <Spin spinning={loading} tip="Yükleniyor..." indicator={<LoadingOutlined spin />} size="large">
-            <div className="grid grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-8 gap-4">
               {data.map((d, k) => (
                 <div onClick={() => {setSelected(d); setOpened(true)}} className="bg-white flex flex-col items-center cursor-pointer shadow-xl hover:bg-gray-200 transition duration-300" key={k}>
                   <img src={apiURL + "/api/image/" + d.image} className='aspect-3/4 w-full object-cover opacity-90' alt={d.fullName} />

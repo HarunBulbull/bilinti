@@ -33,6 +33,10 @@ import TeamMembers from "./admin/Team/TeamMembers"
 import UpdateTeam from "./admin/Team/UpdateTeam"
 import Team from "./pages/Team"
 import FourOFour from "./pages/FourOFour"
+import Contact from "./pages/Contact"
+import ContactAdmin from "./admin/Contact/Contact"
+import Search from "./pages/Search"
+
 
 function App() {
 
@@ -56,6 +60,8 @@ function App() {
       <Route path='/cerez-politikasi' element={<Cookies />}/>
       <Route path='/kvkk' element={<Kvkk />}/>
       <Route path='/ekibimiz' element={<Team />}/>
+      <Route path='/iletisim' element={<Contact />}/>
+      <Route path='/ara/:value' element={<Search />}/>
 
       <Route path='/admin/*'>
         <Route path='kullanici-ekle' element={<AddUser />} />
@@ -77,6 +83,7 @@ function App() {
         <Route path='ekip-ekle' element={<AddTeam />} />
         <Route path='ekip' element={<TeamMembers />} />
         <Route path='ekip-duzenle/:id' element={<UpdateTeam />} />
+        <Route path='iletisim' element={<ContactAdmin />} />
       </Route>
     </Routes>
   )

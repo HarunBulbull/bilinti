@@ -7,6 +7,7 @@ const ImageRoute = require("./image.js");
 const CuffRoute = require("./cuffs.js");
 const ColumnRoute = require("./column.js");
 const TeamRoute = require("./team.js");
+const ContactRoute = require("./contact.js");
 
 
 router.use("/users", UsersRoute);
@@ -15,6 +16,7 @@ router.use("/image", ImageRoute);
 router.use("/cuff", CuffRoute);
 router.use("/column", ColumnRoute);
 router.use("/team", TeamRoute);
+router.use("/contact", ContactRoute);
 
 
 module.exports = router;

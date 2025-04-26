@@ -123,6 +123,31 @@ router.get("/category/:category/:skip/:take", async (req, res) => {
     }
 });
 
+router.get("/search/:value/:skip/:take", async (req, res) => {
+    try {
+        const valueParam = req.params.value;
+        const valueRegex = new RegExp(valueParam, 'i');
+        
+        const data = await News.find(
+            {
+                newStatus: "Yayınlandı",
+                newTitle: { $regex: valueRegex }
+            }, 
+            {_id: 0, newTitle: 1, newImage: 1, newCategory: 1, newLink: 1, createdAt: 1, newViews: 1}
+        ).sort({createdAt: -1}).skip(Number(req.params.skip)).limit(Number(req.params.take));
+        
+        const total = await News.countDocuments({
+            newStatus: "Yayınlandı",
+            newTitle: { $regex: valueRegex }
+        });
+
+        res.status(200).json({  message: "Verilere başarıyla ulaşıldı!", data, total });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "There is an error: " + error });
+    }
+});
+
 router.delete("/:id", authenticateToken, async (req, res) => {
     try {
         const deleted = await News.findByIdAndDelete(req.params.id);
