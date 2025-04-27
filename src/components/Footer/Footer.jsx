@@ -24,6 +24,7 @@ function Footer() {
         { path: '/cerez-politikasi', name: 'Çerez Politikası' },
         { path: '/kvkk', name: 'Kişisel Verilerin Korunması' },
         { path: '/iletisim', name: 'İletişim' },
+        { path: '/tesekkurler', name: 'Teşekkürler' },
     ]
 
     const contact = [
@@ -100,10 +101,7 @@ function Footer() {
                 </div>
                 <div className="flex sm:flex-row flex-col justify-between sm:items-center items-start border-t-1 border-white container">
                     <p className="clamp-p text-white mt-4">
-                        2025 Bilinti Haberleri &copy; Tüm Hakları Saklıdır.
-                    </p>
-                    <p style={{fontSize: "13px", color: "white", opacity: .7}}>
-                        Powered by <a href="https://harunbulbul.com" target="_blank" className="transition duration-300 hover:text-(--secondary)">Harun Bülbül</a>
+                        2025 Bilinti Haber &copy; Tüm Hakları Saklıdır.
                     </p>
                 </div>
             </div>

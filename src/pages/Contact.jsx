@@ -3,11 +3,6 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 
-// Global stil ekleyelim
-const messageStyle = {
-    zIndex: 10000
-};
-
 function Contact() {
     const [messageApi, contextHolder] = message.useMessage();
     const apiURL = import.meta.env.VITE_API_BASE_URL;

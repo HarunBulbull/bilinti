@@ -1,5 +1,6 @@
 const authenticateToken = require('../auth.js');
 const News = require("../models/News.js");
+const Comments = require("../models/Comments.js");
 const express = require("express");
 const dotenv = require("dotenv");
 const router = express.Router();
@@ -183,9 +184,15 @@ router.get("/author/:id/:skip/:take/:status", authenticateToken, async (req, res
 
 router.get("/link/:link", async (req, res) => {
     try {
-        const data = await News.findOne({newStatus: "Yayınlandı", newLink: req.params.link}, {_id: 0, newTitle: 1, newImage: 1, newCategory: 1, createdAt: 1, newViews: 1, newSEO: 1, newLink: 1, newContent: 1, newAuthor: 1}).populate('newAuthor', {_id: 0, fullName: 1});
-        if(data){await News.findOneAndUpdate({newLink: req.params.link}, {newViews: data.newViews+1})}
-        res.status(200).json({ message: "Veriye başarıyla ulaşıldı!", data });
+        const data = await News.findOne({newStatus: "Yayınlandı", newLink: req.params.link}, {_id: 1, newTitle: 1, newImage: 1, newCategory: 1, createdAt: 1, newViews: 1, newSEO: 1, newLink: 1, newContent: 1, newAuthor: 1}).populate('newAuthor', {_id: 0, fullName: 1});
+        let comments = [];
+        let total = 0;
+        if(data){
+            await News.findOneAndUpdate({newLink: req.params.link}, {newViews: data.newViews+1})
+            comments = await Comments.find({commentNew: data._id}).sort({createdAt: -1}).skip(0).limit(3).populate('commentMember', {_id: 0, fullName: 1});
+            total = await Comments.countDocuments({commentNew: data._id});
+        }
+        res.status(200).json({ message: "Veriye başarıyla ulaşıldı!", data, comments, total });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "There is an error: " + error });

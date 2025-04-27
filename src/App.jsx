@@ -36,6 +36,8 @@ import FourOFour from "./pages/FourOFour"
 import Contact from "./pages/Contact"
 import ContactAdmin from "./admin/Contact/Contact"
 import Search from "./pages/Search"
+import Profile from "./pages/Profile"
+import Thanks from "./pages/Thanks"
 
 
 function App() {
@@ -62,6 +64,8 @@ function App() {
       <Route path='/ekibimiz' element={<Team />}/>
       <Route path='/iletisim' element={<Contact />}/>
       <Route path='/ara/:value' element={<Search />}/>
+      <Route path='/profil' element={<Profile />}/>
+      <Route path='/tesekkurler' element={<Thanks />}/>
 
       <Route path='/admin/*'>
         <Route path='kullanici-ekle' element={<AddUser />} />

@@ -1,17 +1,25 @@
+import { Breadcrumb, Spin, Input, Button, message } from 'antd';
+import { useEffect, useState, useRef } from "react";
 import { LoadingOutlined } from '@ant-design/icons';
+import { useParams, Link } from "react-router-dom";
 import { HomeOutlined } from '@ant-design/icons';
 import { EyeFill } from "react-bootstrap-icons";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { Breadcrumb, Spin } from 'antd';
 import { Helmet } from 'react-helmet';
 import moment from "moment"
 
 
 function NewDetail() {
+  const member = localStorage.getItem("member") ? localStorage.getItem("member") : null;
+  const [commentContent, setCommentContent] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
   const apiURL = import.meta.env.VITE_API_BASE_URL;
   const [loading, setLoading] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [index, setIndex] = useState(0);
   const [data, setData] = useState([]);
+  const replyInputRefs = useRef({});
   const { link } = useParams();
 
   const fetchData = async () => {
@@ -19,23 +27,118 @@ function NewDetail() {
       setLoading(true);
       const response = await fetch(`${apiURL}/api/news/link/${link}`, { method: "GET", });
       const data = await response.json();
-      if (response.ok) { setData(data.data); }
+      if (response.ok) {
+        setData(data.data);
+        setComments(data.comments);
+        setTotal(data.total);
+      }
     }
     catch (error) { console.log(error); }
     finally { setLoading(false); }
   }
 
-  useEffect(() => { fetchData(); }, [])
+  const fetchComments = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${apiURL}/api/comments/${data._id}/${index}/${index + 3}`, { method: "GET", });
+      const data1 = await response.json();
+      if (response.ok) {
+        setComments([...comments, data1.comments].flat());
+        setTotal(data1.total);
+      }
+    }
+    catch (error) { console.log(error); }
+    finally { setLoading(false); }
+  }
+
+
+  useEffect(() => { if (index > 0) { fetchComments() } }, [index]);
+
+  useEffect(() => { fetchData(); }, []);
+
+  const handleComment = async () => {
+    try {
+      setSending(true);
+      const response = await fetch(`${apiURL}/api/comments`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          commentNew: data._id,
+          commentMember: member,
+          commentContent
+        })
+      });
+      const data1 = await response.json();
+      if (response.ok) {
+        messageApi.success("Yorum gönderildi!");
+        setCommentContent("");
+        fetchData();
+      }
+      else { messageApi.error(data1.message) }
+    }
+    catch (error) { console.log(error); }
+    finally { setSending(false); }
+  }
+
+  const handleSub = async (id) => {
+    try {
+      const value = replyInputRefs.current[id]?.resizableTextArea?.textArea?.value || "";
+      if (!value.trim()) {
+        messageApi.error("Lütfen yanıt içeriği giriniz!");
+        return;
+      }
+
+      setSending(true);
+      const response = await fetch(`${apiURL}/api/comments/sub/${id}`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          member,
+          value
+        })
+      });
+      const data1 = await response.json();
+      if (response.ok) {
+        messageApi.success("Yanıt gönderildi!");
+        if (replyInputRefs.current[id]) {
+          replyInputRefs.current[id].resizableTextArea.textArea.value = "";
+        }
+        fetchData();
+      }
+      else { messageApi.error(data1.message) }
+    }
+    catch (error) { console.log(error); }
+    finally { setSending(false); }
+  }
 
   return (
     <Spin spinning={loading} tip="Yükleniyor..." indicator={<LoadingOutlined spin />} size="large">
+      {contextHolder}
+      <style>
+        {`
+                    .ant-message {
+                        z-index: 10000 !important;
+                    }
+                `}
+      </style>
       {data?.newSEO &&
         <Helmet>
           <title>{data?.newSEO?.title} | Bilinti</title>
-          <meta name="description" content={data?.newSEO?.description}/>
-          <meta name="keywords" content={data?.newSEO?.keywords}/>
-          <meta name="author" content={data?.newAuthor?.fullName}/>
-          <link rel="canonical" href={"https://www.bilintihaber.com/haber/" + data?.newLink}/>
+          <meta name="description" content={data?.newSEO?.description} />
+          <meta name="keywords" content={data?.newSEO?.keywords} />
+          <meta name="author" content={data?.newAuthor?.fullName} />
+          <link rel="canonical" href={`https://www.bilintihaber.com/haber/${data?.newLink}`} />
+
+          <meta property="og:title" content={`${data?.newSEO?.title} | Bilinti`} />
+          <meta property="og:description" content={data?.newSEO?.description} />
+          <meta property="og:url" content={`https://www.bilintihaber.com/haber/${data?.newLink}`} />
+          <meta property="og:type" content="article" />
+          {data?.newImage && <meta property="og:image" content={`${apiURL}/api/image/${data.newImage}`} />}
+
+          <meta name="twitter:card" content="summary_large_image" /> 
+          <meta name="twitter:title" content={`${data?.newSEO?.title} | Bilinti`} />
+          <meta name="twitter:description" content={data?.newSEO?.description} />
+          {data?.newImage && <meta name="twitter:image" content={`${apiURL}/api/image/${data.newImage}`} />}
         </Helmet>
       }
       <div className="flex flex-col w-full justify-center items-center">
@@ -75,6 +178,76 @@ function NewDetail() {
                 <p className="clamp-p flex items-center gap-2"><EyeFill /> {data.newViews}</p>
               </div>
             </div>
+            <span className="block w-full h-[2px] bg-linear-to-r from-(--secondary) to-(--primary) mt-2" />
+            <h4 className="clamp-h4 font-bold">Yorumlar</h4>
+            {member ?
+              <div className="flex flex-col gap-2 mb-8">
+                <b>Yorum yap</b>
+                <Input.TextArea
+                  rows={2}
+                  value={commentContent}
+                  onChange={(e) => setCommentContent(e.target.value)}
+                  placeholder="Yorumunuzu buraya yazınız..."
+                />
+                <Button
+                  loading={sending}
+                  onClick={handleComment}
+                  type='primary'
+                  className='self-end'
+                  disabled={!commentContent.trim()}
+                >
+                  Yorum yap
+                </Button>
+              </div>
+              :
+              <b>Yorum yapmak için <Link to='/profil'>giriş yap</Link>.</b>
+            }
+            {comments.map((c, k) => (
+              <div className="flex flex-col g-2 py-6 border-b-1" key={k}>
+                <div className="flex justify-between items-center">
+                  <b className='clamp-p'>{c?.commentMember?.fullName}:</b>
+                  <i className='clamp-p'>{moment(c.createdAt).format("DD/MM/YYYY HH:mm")}</i>
+                </div>
+                <p className='clamp-p'>{c.commentContent}</p>
+                {
+                  c.commentSubs && c.commentSubs.length > 0 &&
+                  <div className="pl-4 flex flex-col py-4 gap-4">
+                    {c.commentSubs.map((s, i) => (
+                      <div key={i} className="flex flex-col border-l-1 pl-4">
+                        <div className="flex justify-between items-center">
+                          <b className='clamp-p'>{s?.member?.name}:</b>
+                          <i className='clamp-p'>{moment(s.date).format("DD/MM/YYYY HH:mm")}</i>
+                        </div>
+                        <p className='clamp-p'>{s.comment}</p>
+                      </div>
+                    ))}
+                  </div>
+                }
+                {member ?
+                  <div className="flex flex-col gap-2 pt-4">
+                    <b>Yanıtla</b>
+                    <Input.TextArea
+                      rows={1}
+                      placeholder="Yanıtınızı buraya yazınız..."
+                      ref={el => replyInputRefs.current[c._id] = el}
+                    />
+                    <Button
+                      loading={sending}
+                      onClick={() => handleSub(c._id)}
+                      type='primary'
+                      className='self-end'
+                    >
+                      Yanıtla
+                    </Button>
+                  </div>
+                  :
+                  <p>Yanıt vermek için <Link to='/profil'>giriş yap</Link>.</p>
+                }
+              </div>
+            ))}
+            {index < total &&
+              <Button onClick={() => setIndex(index + 3)}>Daha fazla</Button>
+            }
           </div>
         </div>
         <style>

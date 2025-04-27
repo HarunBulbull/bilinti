@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
+import { Person } from "react-bootstrap-icons";
 
 function Navbar() {
     const [loading, setLoading] = useState(false);
@@ -117,6 +118,9 @@ function Navbar() {
                                     </Link>
                                 </li>
                             ))}
+                            <li className="xl:w-[30px] w-auto rounded-md px-4 xl:px-0 h-[30px] xl:rounded-[50%] bg-(--secondary) text-white">
+                                <Link to='/profil' className="w-full h-full flex justify-center items-center xl:before:content-[''] before:content-['Profil']"><Person/></Link>
+                            </li>
                         </ul>
                         <div ref={burger} className="xl:hidden flex flex-col h-[50px] itemss-center justify-center cursor-pointer transition-all duration-300" style={{ gap: ".5rem" }} onClick={() => handleMenu()}>
                             <span ref={span1} className="block w-[15px] h-[1px] bg-black transition-all duration-300" />
